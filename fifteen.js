@@ -22,6 +22,8 @@ window.onload = function(){
         tiles[i].style.top = y_offset*100 + "px";
         tiles[i].style.backgroundPosition = x_offset*-100 + "px " + y_offset*-100 + "px";
         x_offset++;
+        
+        tiles[i].onclick = tileClick;
     }
     
     btn_shuffle = $$("#shufflebutton")[0];
@@ -52,4 +54,13 @@ var findEmpty = function(){
     blank_x = ((40-x_cnt)-1)*100;
     blank_y = ((40-y_cnt)-1)*100;
     //console.log("blank_x: " + blank_x + ", blank_y: " + blank_y);
-}
+};
+
+var tileClick = function(){
+    //console.log("tile click");
+    console.log("left: " + this.style.left + " top: " + this.style.top);
+    console.log(blank_x + " " + blank_y);
+    this.style.left = blank_x + "px";
+    this.style.top = blank_y + "px";
+    console.log("left: " + this.style.left + " top: " + this.style.top);
+};
