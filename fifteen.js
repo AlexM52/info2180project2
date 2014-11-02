@@ -1,16 +1,16 @@
 /*VAR DECLARATION*/
 var tiles;
 var btn_shuffle;
-var x_offset;
-var y_offset;
-var blank_x;
-var blank_y;
+//var x_offset;
+//var y_offset;
+var blank_x = "300px";
+var blank_y = "300px";
 
 /*ONLOAD - SETS EVERYTHING UP*/
 window.onload = function(){
     tiles = $$("#puzzlearea div");
-    x_offset = 0;
-    y_offset = 0;
+    var x_offset = 0;
+    var y_offset = 0;
     for(var i=0; i<tiles.length; i++){
         tiles[i].addClassName("puzzlepiece");
         tiles[i].setAttribute('id', 'piece'+(i+1));
