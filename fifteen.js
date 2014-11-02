@@ -6,9 +6,13 @@ var blank_y = "300px";
 
 /*ONLOAD - SETS EVERYTHING UP*/
 window.onload = function(){
+    /*Collect all puzzle tile elements for future reference.*/
     tiles = $$("#puzzlearea div");
+    /*Offset variables to set up each tile (position, background, etc)*/
     var x_offset = 0;
     var y_offset = 0;
+    /*Iterate through each tile and assign classname 'puzzlepiece', 
+    id 'piece_x_y', positioning, background and onclick handler*/
     for(var i=0; i<tiles.length; i++){
         if(x_offset===4){
             x_offset=0;
@@ -24,9 +28,10 @@ window.onload = function(){
         
         tiles[i].onclick = tileClick;
     }
-    
+    /*Set the current movable pieces. (Could disable to prevent 
+    any movement before shuffling the puzzle)*/
     setMovables();
-    
+    /*Find the shuffle button and set it's onclick handler.*/
     var btn_shuffle = $$("#shufflebutton")[0];
     btn_shuffle.onclick = shuffleClick;
 };
@@ -36,7 +41,8 @@ window.onload = function(){
 /*shuffleClick() - onclick handler for shuffle button. 
 Shuffles tiles, calls findEmpty() and setMovables()*/
 var shuffleClick = function(){
-    //shuffle code here;
+    /*Iterate a given number of times(25), finding all movable tiles
+    picking one at random and moving it, to shuffle the game*/
     for(var i=0; i<25; i++){
         var m_tiles = $$(".movablepiece");
         var tile = m_tiles[Math.floor(Math.random()*m_tiles.length)];
@@ -46,14 +52,17 @@ var shuffleClick = function(){
 
 /*tileClick() - onclick handler for each tile element*/
 var tileClick = function(){
+    /*Only do anything if the clicked tile is movable*/
     if(this.className==="puzzlepiece movablepiece"){
+        /*Basically, swap the positions of the clicked tile
+        and blank space*/
         var tmp_x = this.style.left;
         var tmp_y = this.style.top;
         this.style.left = blank_x;
         this.style.top = blank_y;
-        var bx = parseInt(blank_x, 10)/100;
-        var by = parseInt(blank_y, 10)/100;
-        this.setAttribute('id', 'piece_'+bx+"_"+by);
+        var bx = parseInt(blank_x, 10)/100;             // And also
+        var by = parseInt(blank_y, 10)/100;             // change the
+        this.setAttribute('id', 'piece_'+bx+"_"+by);    // id to match..
         blank_x = tmp_x;
         blank_y = tmp_y;
         setMovables();
@@ -63,12 +72,16 @@ var tileClick = function(){
 /*setMoveables() - called after moving a tile. Determines 
 moveable tiles and sets styling. Resets previous tiles*/
 var setMovables = function(){
+    /*Clear any previously set movable tiles*/
     for(var i=0; i<tiles.length; i++){
         tiles[i].removeClassName("movablepiece");
     }
+    /*Get the grid position of the blank space*/
     var pos_x = parseInt(blank_x, 10)/100;
     var pos_y = parseInt(blank_y, 10)/100;
-    var t;
+    var t;      //Variable for the next part
+    /*If applicable, set the tiles above, below, left and right
+    of the blank to movable.*/
     if(pos_x>=1){
         t = getTileAt(pos_x-1, pos_y);
         t[0].addClassName("movablepiece");
