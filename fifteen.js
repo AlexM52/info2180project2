@@ -51,16 +51,20 @@ var findEmpty = function(){
         y_cnt += ((parseInt(tiles[i].style.top)/100)+1);
     }
     //console.log(x_cnt + " " + y_cnt);
-    blank_x = ((40-x_cnt)-1)*100;
-    blank_y = ((40-y_cnt)-1)*100;
+    blank_x = ((40-x_cnt)-1)*100 + "px";
+    blank_y = ((40-y_cnt)-1)*100 + "px";
     //console.log("blank_x: " + blank_x + ", blank_y: " + blank_y);
 };
 
 var tileClick = function(){
     //console.log("tile click");
-    console.log("left: " + this.style.left + " top: " + this.style.top);
-    console.log(blank_x + " " + blank_y);
-    this.style.left = blank_x + "px";
-    this.style.top = blank_y + "px";
-    console.log("left: " + this.style.left + " top: " + this.style.top);
+    //console.log("left: " + this.style.left + " top: " + this.style.top);
+    //console.log(blank_x + " " + blank_y);
+    var tmp_x = this.style.left;
+    var tmp_y = this.style.top;
+    this.style.left = blank_x;
+    this.style.top = blank_y;
+    blank_x = tmp_x;
+    blank_y = tmp_y;
+    //console.log("left: " + this.style.left + " top: " + this.style.top);
 };
