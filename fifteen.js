@@ -26,17 +26,23 @@ window.onload = function(){
         tiles[i].onclick = tileClick;
     }
     
+    setMovables();
+    
     btn_shuffle = $$("#shufflebutton")[0];
     //console.log("logloglog");
-    btn_shuffle.onclick = function(){
-        //shuffle code here;
-        console.log("button click");
-        findEmpty();
-        
-    }
+    btn_shuffle.onclick = shuffleClick;
 }
 
 /*ADDITIONAL FUNCTION DEFINITIONS*/
+
+/*shuffleClick() - onclick handler for shuffle button. 
+Shuffles tiles, calls findEmpty() and setMovables()*/
+var shuffleClick = function(){
+        //shuffle code here;
+        console.log("button click");
+        findEmpty();
+        setMovables();
+    }
 
 /*findEmpty() - sets blank_x and blank_y to x and y coordinates 
 of the missing square based on the positions of the 'puzzlepiece' 
@@ -72,18 +78,36 @@ var tileClick = function(){
     blank_x = tmp_x;
     blank_y = tmp_y;
     //console.log("left: " + this.style.left + " top: " + this.style.top);
+    setMovables();
 };
 
 /*setMoveables() - called after moving a tile. Determines 
 moveable tiles and sets styling. Resets previous tiles*/
-var setMoveables = function(){
+var setMovables = function(){
     for(var i=0; i<tiles.length; i++){
-        tiles[i].removeClassName("moveablepiece");
+        tiles[i].removeClassName("movablepiece");
     }
-    var pos_x = parseInt(blank_x);
-    var pos_y = parseInt(blank_y);
-    if(pos_x<=100){
-        
+    var pos_x = parseInt(blank_x)/100;
+    var pos_y = parseInt(blank_y)/100;
+    console.log(pos_x + " "+pos_y);
+    var t;
+    if(pos_x>=1){
+        t = getTileAt(pos_x-1, pos_y);
+        console.log(t);
+        t[0].addClassName("movablepiece");
+    }
+    if(pos_x<=2){
+        t = getTileAt(pos_x+1, pos_y);
+        console.log(t);
+        t[0].addClassName("movablepiece");
+    }
+    if(pos_y>=1){
+        t = getTileAt(pos_x, pos_y-1);
+        t[0].addClassName("movablepiece");
+    }
+    if(pos_y<=2){
+        t = getTileAt(pos_x, pos_y+1);
+        t[0].addClassName("movablepiece");
     }
 }
 
