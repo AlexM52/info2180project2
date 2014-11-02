@@ -1,9 +1,6 @@
 "use strict";
 /*VAR DECLARATION*/
 var tiles;
-//var btn_shuffle;
-//var x_offset;
-//var y_offset;
 var blank_x = "300px";
 var blank_y = "300px";
 
@@ -31,7 +28,6 @@ window.onload = function(){
     setMovables();
     
     var btn_shuffle = $$("#shufflebutton")[0];
-    //console.log("logloglog");
     btn_shuffle.onclick = shuffleClick;
 };
 
@@ -43,39 +39,13 @@ var shuffleClick = function(){
     //shuffle code here;
     for(var i=0; i<25; i++){
         var m_tiles = $$(".movablepiece");
-        //console.log("shuffle " + i);
         var tile = m_tiles[Math.floor(Math.random()*m_tiles.length)];
-        //console.log(tile.id);
         moveTile(tile.id);
     }
-    //console.log("button click");
-    //findEmpty();
-    //setMovables();
-};
-
-/*findEmpty() - sets blank_x and blank_y to x and y coordinates 
-of the missing square based on the positions of the 'puzzlepiece' 
-elements*/
-var findEmpty = function(){
-    console.log("find empty");
-    var x_cnt = 0;
-    var y_cnt = 0;
-    for(var i=0; i<tiles.length; i++){
-        //console.log("position: " + tiles[i].style.left + ", " + tiles[i].style.top);
-        x_cnt += ((parseInt(tiles[i].style.left, 10)/100)+1);
-        y_cnt += ((parseInt(tiles[i].style.top, 10)/100)+1);
-    }
-    //console.log(x_cnt + " " + y_cnt);
-    blank_x = ((40-x_cnt)-1)*100 + "px";
-    blank_y = ((40-y_cnt)-1)*100 + "px";
-    //console.log("blank_x: " + blank_x + ", blank_y: " + blank_y);
 };
 
 /*tileClick() - onclick handler for each tile element*/
 var tileClick = function(){
-    //console.log("tile click");
-    //console.log("left: " + this.style.left + " top: " + this.style.top);
-    //console.log(blank_x + " " + blank_y);
     if(this.className==="puzzlepiece movablepiece"){
         var tmp_x = this.style.left;
         var tmp_y = this.style.top;
@@ -84,10 +54,8 @@ var tileClick = function(){
         var bx = parseInt(blank_x, 10)/100;
         var by = parseInt(blank_y, 10)/100;
         this.setAttribute('id', 'piece_'+bx+"_"+by);
-        //console.log(this.id);
         blank_x = tmp_x;
         blank_y = tmp_y;
-        //console.log("left: " + this.style.left + " top: " + this.style.top);
         setMovables();
     }
 };
@@ -100,16 +68,13 @@ var setMovables = function(){
     }
     var pos_x = parseInt(blank_x, 10)/100;
     var pos_y = parseInt(blank_y, 10)/100;
-    //console.log(pos_x + " "+pos_y);
     var t;
     if(pos_x>=1){
         t = getTileAt(pos_x-1, pos_y);
-        //console.log(t);
         t[0].addClassName("movablepiece");
     }
     if(pos_x<=2){
         t = getTileAt(pos_x+1, pos_y);
-        //console.log(t);
         t[0].addClassName("movablepiece");
     }
     if(pos_y>=1){
@@ -130,10 +95,7 @@ var getTileAt = function(pos_x, pos_y){
 
 /*moveTile() - moves a tile*/
 var moveTile = function(id){
-    //console.log(id);
     var tile = $$("#"+id)[0];
-    //console.log(tile);
-    //console.log("old blank: "+blank_x+" "+blank_y);
     var tmp_x = tile.style.left;
     var tmp_y = tile.style.top;
     tile.style.left = blank_x;
@@ -141,11 +103,7 @@ var moveTile = function(id){
     var bx = parseInt(blank_x, 10)/100;
     var by = parseInt(blank_y, 10)/100;
     tile.setAttribute('id', 'piece_'+bx+"_"+by);
-    //console.log(this.id);
     blank_x = tmp_x;
     blank_y = tmp_y;
-    //console.log("new: left: " + tile.style.left + " top: " + tile.style.top);
-    //console.log(tile);
-    //console.log("new blank: "+blank_x+" "+blank_y);
     setMovables();
 };
