@@ -1,3 +1,4 @@
+"use strict";
 /*VAR DECLARATION*/
 var tiles;
 //var btn_shuffle;
@@ -32,25 +33,25 @@ window.onload = function(){
     var btn_shuffle = $$("#shufflebutton")[0];
     //console.log("logloglog");
     btn_shuffle.onclick = shuffleClick;
-}
+};
 
 /*ADDITIONAL FUNCTION DEFINITIONS*/
 
 /*shuffleClick() - onclick handler for shuffle button. 
 Shuffles tiles, calls findEmpty() and setMovables()*/
 var shuffleClick = function(){
-        //shuffle code here;
-        for(var i=0; i<25; i++){
-            var m_tiles = $$(".movablepiece");
-            //console.log("shuffle " + i);
-            var tile = m_tiles[Math.floor(Math.random()*m_tiles.length)]
-            //console.log(tile.id);
-            moveTile(tile.id);
-        }
-        //console.log("button click");
-        //findEmpty();
-        //setMovables();
+    //shuffle code here;
+    for(var i=0; i<25; i++){
+        var m_tiles = $$(".movablepiece");
+        //console.log("shuffle " + i);
+        var tile = m_tiles[Math.floor(Math.random()*m_tiles.length)];
+        //console.log(tile.id);
+        moveTile(tile.id);
     }
+    //console.log("button click");
+    //findEmpty();
+    //setMovables();
+};
 
 /*findEmpty() - sets blank_x and blank_y to x and y coordinates 
 of the missing square based on the positions of the 'puzzlepiece' 
@@ -61,8 +62,8 @@ var findEmpty = function(){
     var y_cnt = 0;
     for(var i=0; i<tiles.length; i++){
         //console.log("position: " + tiles[i].style.left + ", " + tiles[i].style.top);
-        x_cnt += ((parseInt(tiles[i].style.left)/100)+1);
-        y_cnt += ((parseInt(tiles[i].style.top)/100)+1);
+        x_cnt += ((parseInt(tiles[i].style.left, 10)/100)+1);
+        y_cnt += ((parseInt(tiles[i].style.top, 10)/100)+1);
     }
     //console.log(x_cnt + " " + y_cnt);
     blank_x = ((40-x_cnt)-1)*100 + "px";
@@ -80,8 +81,8 @@ var tileClick = function(){
         var tmp_y = this.style.top;
         this.style.left = blank_x;
         this.style.top = blank_y;
-        var bx = parseInt(blank_x)/100;
-        var by = parseInt(blank_y)/100;
+        var bx = parseInt(blank_x, 10)/100;
+        var by = parseInt(blank_y, 10)/100;
         this.setAttribute('id', 'piece_'+bx+"_"+by);
         //console.log(this.id);
         blank_x = tmp_x;
@@ -97,8 +98,8 @@ var setMovables = function(){
     for(var i=0; i<tiles.length; i++){
         tiles[i].removeClassName("movablepiece");
     }
-    var pos_x = parseInt(blank_x)/100;
-    var pos_y = parseInt(blank_y)/100;
+    var pos_x = parseInt(blank_x, 10)/100;
+    var pos_y = parseInt(blank_y, 10)/100;
     //console.log(pos_x + " "+pos_y);
     var t;
     if(pos_x>=1){
@@ -119,13 +120,13 @@ var setMovables = function(){
         t = getTileAt(pos_x, pos_y+1);
         t[0].addClassName("movablepiece");
     }
-}
+};
 
 /*getTileAt(pos_x, pos_y) - Given x and y coordinates, 
 return puzzle tile at that location*/
 var getTileAt = function(pos_x, pos_y){
     return $$("#puzzlearea #piece_"+pos_x+"_"+pos_y);
-}
+};
 
 /*moveTile() - moves a tile*/
 var moveTile = function(id){
@@ -137,8 +138,8 @@ var moveTile = function(id){
     var tmp_y = tile.style.top;
     tile.style.left = blank_x;
     tile.style.top = blank_y;
-    var bx = parseInt(blank_x)/100;
-    var by = parseInt(blank_y)/100;
+    var bx = parseInt(blank_x, 10)/100;
+    var by = parseInt(blank_y, 10)/100;
     tile.setAttribute('id', 'piece_'+bx+"_"+by);
     //console.log(this.id);
     blank_x = tmp_x;
@@ -147,4 +148,4 @@ var moveTile = function(id){
     //console.log(tile);
     //console.log("new blank: "+blank_x+" "+blank_y);
     setMovables();
-}
+};
