@@ -90,5 +90,5 @@ var setMoveables = function(){
 /*getTileAt(pos_x, pos_y) - Given x and y coordinates, 
 return puzzle tile at that location*/
 var getTileAt = function(pos_x, pos_y){
-    $$("#puzzlearea").getElem
+    return $$("#puzzlearea #piece_"+pos_x+"_"+pos_y);
 }
