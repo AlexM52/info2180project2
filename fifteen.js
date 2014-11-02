@@ -67,18 +67,20 @@ var tileClick = function(){
     //console.log("tile click");
     //console.log("left: " + this.style.left + " top: " + this.style.top);
     //console.log(blank_x + " " + blank_y);
-    var tmp_x = this.style.left;
-    var tmp_y = this.style.top;
-    this.style.left = blank_x;
-    this.style.top = blank_y;
-    var bx = parseInt(blank_x)/100;
-    var by = parseInt(blank_y)/100;
-    this.setAttribute('id', 'piece_'+bx+"_"+by);
-    //console.log(this.id);
-    blank_x = tmp_x;
-    blank_y = tmp_y;
-    //console.log("left: " + this.style.left + " top: " + this.style.top);
-    setMovables();
+    if(this.className==="puzzlepiece movablepiece"){
+        var tmp_x = this.style.left;
+        var tmp_y = this.style.top;
+        this.style.left = blank_x;
+        this.style.top = blank_y;
+        var bx = parseInt(blank_x)/100;
+        var by = parseInt(blank_y)/100;
+        this.setAttribute('id', 'piece_'+bx+"_"+by);
+        //console.log(this.id);
+        blank_x = tmp_x;
+        blank_y = tmp_y;
+        //console.log("left: " + this.style.left + " top: " + this.style.top);
+        setMovables();
+    }
 };
 
 /*setMoveables() - called after moving a tile. Determines 
@@ -89,16 +91,16 @@ var setMovables = function(){
     }
     var pos_x = parseInt(blank_x)/100;
     var pos_y = parseInt(blank_y)/100;
-    console.log(pos_x + " "+pos_y);
+    //console.log(pos_x + " "+pos_y);
     var t;
     if(pos_x>=1){
         t = getTileAt(pos_x-1, pos_y);
-        console.log(t);
+        //console.log(t);
         t[0].addClassName("movablepiece");
     }
     if(pos_x<=2){
         t = getTileAt(pos_x+1, pos_y);
-        console.log(t);
+        //console.log(t);
         t[0].addClassName("movablepiece");
     }
     if(pos_y>=1){
