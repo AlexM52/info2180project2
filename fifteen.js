@@ -13,7 +13,7 @@ window.onload = function(){
     var y_offset = 0;
     for(var i=0; i<tiles.length; i++){
         tiles[i].addClassName("puzzlepiece");
-        tiles[i].setAttribute('id', 'piece'+(i+1));
+        tiles[i].setAttribute('id', 'piece_'+x_offset+"_"+y_offset);
         if(x_offset===4){
             x_offset=0;
             y_offset++;
@@ -56,6 +56,7 @@ var findEmpty = function(){
     //console.log("blank_x: " + blank_x + ", blank_y: " + blank_y);
 };
 
+/*tileClick() - onclick handler for each tile element*/
 var tileClick = function(){
     //console.log("tile click");
     //console.log("left: " + this.style.left + " top: " + this.style.top);
@@ -64,7 +65,30 @@ var tileClick = function(){
     var tmp_y = this.style.top;
     this.style.left = blank_x;
     this.style.top = blank_y;
+    var bx = parseInt(blank_x)/100;
+    var by = parseInt(blank_y)/100;
+    this.setAttribute('id', 'piece_'+bx+"_"+by);
+    //console.log(this.id);
     blank_x = tmp_x;
     blank_y = tmp_y;
     //console.log("left: " + this.style.left + " top: " + this.style.top);
 };
+
+/*setMoveables() - called after moving a tile. Determines 
+moveable tiles and sets styling. Resets previous tiles*/
+var setMoveables = function(){
+    for(var i=0; i<tiles.length; i++){
+        tiles[i].removeClassName("moveablepiece");
+    }
+    var pos_x = parseInt(blank_x);
+    var pos_y = parseInt(blank_y);
+    if(pos_x<=100){
+        
+    }
+}
+
+/*getTileAt(pos_x, pos_y) - Given x and y coordinates, 
+return puzzle tile at that location*/
+var getTileAt = function(pos_x, pos_y){
+    $$("#puzzlearea").getElem
+}
