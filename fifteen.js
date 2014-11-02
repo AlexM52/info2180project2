@@ -1,6 +1,6 @@
 /*VAR DECLARATION*/
 var tiles;
-var btn_shuffle;
+//var btn_shuffle;
 //var x_offset;
 //var y_offset;
 var blank_x = "300px";
@@ -12,12 +12,13 @@ window.onload = function(){
     var x_offset = 0;
     var y_offset = 0;
     for(var i=0; i<tiles.length; i++){
-        tiles[i].addClassName("puzzlepiece");
-        tiles[i].setAttribute('id', 'piece_'+x_offset+"_"+y_offset);
         if(x_offset===4){
             x_offset=0;
             y_offset++;
         }
+        tiles[i].addClassName("puzzlepiece");
+        tiles[i].setAttribute('id', 'piece_'+x_offset+"_"+y_offset);
+        
         tiles[i].style.left = x_offset*100 + "px";
         tiles[i].style.top = y_offset*100 + "px";
         tiles[i].style.backgroundPosition = x_offset*-100 + "px " + y_offset*-100 + "px";
@@ -28,7 +29,7 @@ window.onload = function(){
     
     setMovables();
     
-    btn_shuffle = $$("#shufflebutton")[0];
+    var btn_shuffle = $$("#shufflebutton")[0];
     //console.log("logloglog");
     btn_shuffle.onclick = shuffleClick;
 }
@@ -39,9 +40,16 @@ window.onload = function(){
 Shuffles tiles, calls findEmpty() and setMovables()*/
 var shuffleClick = function(){
         //shuffle code here;
-        console.log("button click");
-        findEmpty();
-        setMovables();
+        for(var i=0; i<25; i++){
+            var m_tiles = $$(".movablepiece");
+            //console.log("shuffle " + i);
+            var tile = m_tiles[Math.floor(Math.random()*m_tiles.length)]
+            //console.log(tile.id);
+            moveTile(tile.id);
+        }
+        //console.log("button click");
+        //findEmpty();
+        //setMovables();
     }
 
 /*findEmpty() - sets blank_x and blank_y to x and y coordinates 
@@ -117,4 +125,26 @@ var setMovables = function(){
 return puzzle tile at that location*/
 var getTileAt = function(pos_x, pos_y){
     return $$("#puzzlearea #piece_"+pos_x+"_"+pos_y);
+}
+
+/*moveTile() - moves a tile*/
+var moveTile = function(id){
+    //console.log(id);
+    var tile = $$("#"+id)[0];
+    //console.log(tile);
+    //console.log("old blank: "+blank_x+" "+blank_y);
+    var tmp_x = tile.style.left;
+    var tmp_y = tile.style.top;
+    tile.style.left = blank_x;
+    tile.style.top = blank_y;
+    var bx = parseInt(blank_x)/100;
+    var by = parseInt(blank_y)/100;
+    tile.setAttribute('id', 'piece_'+bx+"_"+by);
+    //console.log(this.id);
+    blank_x = tmp_x;
+    blank_y = tmp_y;
+    //console.log("new: left: " + tile.style.left + " top: " + tile.style.top);
+    //console.log(tile);
+    //console.log("new blank: "+blank_x+" "+blank_y);
+    setMovables();
 }
